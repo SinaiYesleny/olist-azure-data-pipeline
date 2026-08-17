@@ -1,4 +1,5 @@
 # Olist Azure Data Pipeline
+**Author:** Sinaí Sánchez
 
 ## Project Overview
 This project creates an end-to-end data pipeline in Azure using part of the Brazilian E-Commerce Public Dataset by Olist, available on Kaggle.
