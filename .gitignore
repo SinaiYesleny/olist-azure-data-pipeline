@@ -1,0 +1,21 @@
+# Raw data files
+data/
+*.csv
+*.zip
+
+# Credentials and secrets
+.env
+.env.*
+secrets/
+credentials/
+local.settings.json
+*.key
+*.pem
+
+# Internal assessment documents
+*.pdf
+
+# Local editor and operating-system files
+.vscode/
+.DS_Store
+Thumbs.db
