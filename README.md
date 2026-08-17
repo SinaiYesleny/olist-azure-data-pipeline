@@ -124,7 +124,7 @@ Each activity reads one CSV file from the `raw` path and loads its data into the
 The following settings were also included:
 
 - The order dates were converted from text to SQL `DATETIME` using the `yyyy-MM-dd HH:mm:ss` format.
-- Before each load, `TRUNCATE TABLE` clears the destination table. This prevents duplicate records when the pipeline runs again. This also means that all three files are loaded again during every execution.
+- Before each load, `TRUNCATE TABLE` clears the destination table. This prevents duplicate records when the pipeline runs again. Because this is a full-load process, all three files are loaded again each time the pipeline runs.
 
 The pipeline was tested with Debug and then published. It was executed manually using `Trigger now`, and the three Copy Activities showed a `Succeeded` status in Monitor.
 
@@ -294,5 +294,5 @@ I used ChatGPT as a learning and support tool to understand Azure concepts, solv
 
 - `README.md` explains the project, implementation process, results, and conceptual questions.
 - `sql/` contains the scripts used to create and validate the SQL solution.
-- `docs/screenshots/` contains evidence of the Azure resources, pipeline execution, data validation, and query results.
+- `screenshots/` contains evidence of the Azure resources, pipeline execution, data validation, and query results.
 - `.gitignore` prevents local data files and other excluded files from being uploaded.
