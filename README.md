@@ -54,7 +54,7 @@ flowchart LR
 
 A resource group named `rg-olist-data-pipeline` was created to organize all Azure resources used in the project.
 
-![Azure resources in the project resource group](docs/screenshots/01_resource_group.png)
+![Azure resources in the project resource group](./screenshots/01_resource_group.png)
 
 ## Implementation Process
 ### 1. Azure Blob Storage
@@ -71,7 +71,7 @@ ecommerce/
 └── processed/
     └── README.txt
 ```
-![CSV files stored in the raw path](docs/screenshots/02_blob_storage.png)
+![CSV files stored in the raw path](./screenshots/02_blob_storage.png)
 
 The `raw` path contains the original CSV files used as the source for the Azure Data Factory pipeline.
 
@@ -114,7 +114,9 @@ The `pl_load_olist_data` pipeline contains three Copy Activities:
 - `copy_orders`
 - `copy_payments`
 
-![Data Factory pipeline with three Copy Activities](docs/screenshots/03_df_pipeline.png)
+![Data Factory pipeline with three Copy Activities](./screenshots/03_df_pipeline.png)
+
+
 
 Each activity reads one CSV file from the `raw` path and loads its data into the corresponding SQL table. The columns were mapped to match the structure and data types of the destination tables.
 
@@ -125,7 +127,7 @@ The following settings were also included:
 
 The pipeline was tested with Debug and then published. It was executed manually using `Trigger now`, and the three Copy Activities showed a `Succeeded` status in Monitor.
 
-![Successful pipeline execution in Monitor](docs/screenshots/04_df_monitor.png)
+![Successful pipeline execution in Monitor](./screenshots/04_df_monitor.png)
 
 ### 4. Analytical View and Business Analysis 
 #### Data Validation 
@@ -138,7 +140,7 @@ After the pipeline finished, the data was validated in Azure SQL to confirm that
 | `dbo.orders` | 99,441 |
 | `dbo.payments` | 103,886 |
 
-![Record count validation in Azure SQL](docs/screenshots/05_sql_validation.png)
+![Record count validation in Azure SQL](./screenshots/05_sql_validation.png)
 
 The following checks were performed:
 
@@ -186,19 +188,19 @@ The complete SQL queries are available in [`sql/04_business_queries.sql`](sql/04
 
 **Sales by state**
 
-![Total sales by state](docs/screenshots/06_sales_by_state.png)
+![Total sales by state](./screenshots/06_sales_by_state.png)
 
 **Orders by state**
 
-![Number of orders by state](docs/screenshots/07_orders_by_state.png)
+![Number of orders by state](./screenshots/07_orders_by_state.png)
 
 **Monthly sales**
 
-![Month with the highest sales](docs/screenshots/08_monthly_sales.png)
+![Month with the highest sales](screenshots/08_monthly_sales.png)
 
 **Average order value**
 
-![Average order value](docs/screenshots/09_average_order_value.png)
+![Average order value](screenshots/09_average_order_value.png)
 
 ### 5. Production Improvements
 
@@ -277,8 +279,7 @@ I used ChatGPT as a learning and support tool to understand Azure concepts, solv
 │   ├── 02_data_validation.sql
 │   ├── 03_create_view.sql
 │   └── 04_business_queries.sql
-└── docs/
-    └── screenshots/
+└── screenshots/
         ├── 01_resource_group.png
         ├── 02_blob_storage.png
         ├── 03_df_pipeline.png
