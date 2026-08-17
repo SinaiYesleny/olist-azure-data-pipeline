@@ -1,10 +1,5 @@
 # Olist Azure Data Pipeline
 
->revisar
-* No hay capturas de pantalla???
-* REVISAR NOMBRE DE LOS SCRIPTS Y VER SI TODOS ESTÁN EN LA ODCUMENTAICÓN
-* Leer todo y ver si es entendible
->revisar
 ## Project Overview
 This project creates an end-to-end data pipeline in Azure using part of the Brazilian E-Commerce Public Dataset by Olist, available on Kaggle.
 
@@ -59,6 +54,8 @@ flowchart LR
 
 A resource group named `rg-olist-data-pipeline` was created to organize all Azure resources used in the project.
 
+![Azure resources in the project resource group](docs/screenshots/01_resource_group.png)
+
 ## Implementation Process
 ### 1. Azure Blob Storage
 A Storage Account was created to store the source files. Inside it, a private Blob Storage container named `ecommerce` was created, and anonymous access was disabled.
@@ -74,6 +71,8 @@ ecommerce/
 └── processed/
     └── README.txt
 ```
+![CSV files stored in the raw path](docs/screenshots/02_blob_storage.png)
+
 The `raw` path contains the original CSV files used as the source for the Azure Data Factory pipeline.
 
 The `processed` path was reserved for possible transformed files in the future. Since Blob Storage does not keep empty virtual folders, a small `README.txt` file was added to keep the path visible.
@@ -115,6 +114,8 @@ The `pl_load_olist_data` pipeline contains three Copy Activities:
 - `copy_orders`
 - `copy_payments`
 
+![Data Factory pipeline with three Copy Activities](docs/screenshots/03_df_pipeline.png)
+
 Each activity reads one CSV file from the `raw` path and loads its data into the corresponding SQL table. The columns were mapped to match the structure and data types of the destination tables.
 
 The following settings were also included:
@@ -123,6 +124,8 @@ The following settings were also included:
 - Before each load, `TRUNCATE TABLE` clears the destination table. This prevents duplicate records when the pipeline runs again. This also means that all three files are loaded again during every execution.
 
 The pipeline was tested with Debug and then published. It was executed manually using `Trigger now`, and the three Copy Activities showed a `Succeeded` status in Monitor.
+
+![Successful pipeline execution in Monitor](docs/screenshots/04_df_monitor.png)
 
 ### 4. Analytical View and Business Analysis 
 #### Data Validation 
@@ -134,6 +137,8 @@ After the pipeline finished, the data was validated in Azure SQL to confirm that
 | `dbo.customers` | 99,441 |
 | `dbo.orders` | 99,441 |
 | `dbo.payments` | 103,886 |
+
+![Record count validation in Azure SQL](docs/screenshots/05_sql_validation.png)
 
 The following checks were performed:
 
@@ -176,6 +181,24 @@ The complete SQL queries are available in [`sql/04_business_queries.sql`](sql/04
 | State with the highest number of orders | SP: 41,745 orders |
 | Month with the highest sales | November 2017: $1,194,882.80 |
 | Average order value | 160.99 |
+
+##### SQL Query Evidence
+
+**Sales by state**
+
+![Total sales by state](docs/screenshots/06_sales_by_state.png)
+
+**Orders by state**
+
+![Number of orders by state](docs/screenshots/07_orders_by_state.png)
+
+**Monthly sales**
+
+![Month with the highest sales](docs/screenshots/08_monthly_sales.png)
+
+**Average order value**
+
+![Average order value](docs/screenshots/09_average_order_value.png)
 
 ### 5. Production Improvements
 
@@ -245,8 +268,29 @@ I used ChatGPT as a learning and support tool to understand Azure concepts, solv
 
 ## Repository Structure
 
+```text
+.
+├── README.md
+├── .gitignore
+├── sql/
+│   ├── 01_create_tables.sql
+│   ├── 02_data_validation.sql
+│   ├── 03_create_view.sql
+│   └── 04_business_queries.sql
+└── docs/
+    └── screenshots/
+        ├── 01_resource_group.png
+        ├── 02_blob_storage.png
+        ├── 03_df_pipeline.png
+        ├── 04_df_monitor.png
+        ├── 05_sql_validation.png
+        ├── 06_sales_by_state.png
+        ├── 07_orders_by_state.png
+        ├── 08_monthly_sales.png
+        └── 09_average_order_value.png
 ```
 
-- `README.md` contains the project explanation, architecture, results, and conceptual answers.
-- `sql/` contains the table creation, analytical view, validation, and business query scripts.
-- `docs/screenshots/` contains selected evidence of the Azure implementation and SQL results.
+- `README.md` explains the project, implementation process, results, and conceptual questions.
+- `sql/` contains the scripts used to create and validate the SQL solution.
+- `docs/screenshots/` contains evidence of the Azure resources, pipeline execution, data validation, and query results.
+- `.gitignore` prevents local data files and other excluded files from being uploaded.
